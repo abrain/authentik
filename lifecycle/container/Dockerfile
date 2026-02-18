@@ -7,6 +7,22 @@ ARG GIT_BUILD_HASH
 ENV GIT_BUILD_HASH=$GIT_BUILD_HASH
 ENV NODE_ENV=production
 
+WORKDIR /work
+
+COPY corepack.tgz .
+COPY .npm/corepack@latest.tgz ./.npm/corepack@latest.tgz
+
+RUN --mount=type=bind,target=/work/package.json,src=./package.json \
+    --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
+    npm install -g --force .npm/corepack@latest.tgz && \
+    corepack install -g --cache-only corepack.tgz
+
+RUN --mount=type=bind,target=/work/package.json,src=./package.json \
+    --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
+    --mount=type=bind,target=/work/.npm,src=./.npm \
+    --mount=type=bind,target=/work/corepack.tgz,src=./corepack.tgz \
+    corepack npm run install-npm
+
 WORKDIR /work/web
 
 RUN --mount=type=bind,target=/work/web/package.json,src=./web/package.json \
@@ -14,7 +30,7 @@ RUN --mount=type=bind,target=/work/web/package.json,src=./web/package.json \
     --mount=type=bind,target=/work/web/packages/sfe/package.json,src=./web/packages/sfe/package.json \
     --mount=type=bind,target=/work/web/scripts,src=./web/scripts \
     --mount=type=cache,id=npm-ak,sharing=shared,target=/root/.npm \
-    npm ci
+    corepack npm ci
 
 COPY ./package.json /work
 COPY ./web /work/web/

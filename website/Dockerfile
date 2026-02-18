@@ -2,6 +2,22 @@ FROM --platform=${BUILDPLATFORM} docker.io/library/node:25.6.1-trixie@sha256:43d
 
 ENV NODE_ENV=production
 
+WORKDIR /work
+
+COPY corepack.tgz .
+COPY .npm/corepack@latest.tgz ./.npm/corepack@latest.tgz
+
+RUN --mount=type=bind,target=/work/package.json,src=./package.json \
+    --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
+    npm install -g --force .npm/corepack@latest.tgz && \
+    corepack install -g --cache-only corepack.tgz
+
+RUN --mount=type=bind,target=/work/package.json,src=./package.json \
+    --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
+    --mount=type=bind,target=/work/.npm,src=./.npm \
+    --mount=type=bind,target=/work/corepack.tgz,src=./corepack.tgz \
+    corepack npm run install-npm
+
 WORKDIR /work/website
 
 RUN --mount=type=bind,target=/work/website/package.json,src=./website/package.json \
@@ -12,7 +28,7 @@ RUN --mount=type=bind,target=/work/website/package.json,src=./website/package.js
     --mount=type=bind,target=/work/website/integrations/package.json,src=./website/integrations/package.json \
     --mount=type=bind,target=/work/website/docs/package.json,src=./website/docs/package.json \
     --mount=type=cache,id=npm-website,sharing=shared,target=/root/.npm \
-    npm ci --workspaces --include-workspace-root
+    corepack npm ci --workspaces --include-workspace-root
 
 COPY ./website /work/website/
 COPY ./blueprints /work/blueprints/
@@ -20,7 +36,7 @@ COPY ./schema.yml /work/
 COPY ./lifecycle/container/compose.yml /work/lifecycle/container/
 COPY ./SECURITY.md /work/
 
-RUN npm run build
+RUN corepack npm run build
 
 FROM docker.io/library/nginx:1.29-trixie@sha256:341bf0f3ce6c5277d6002cf6e1fb0319fa4252add24ab6a0e262e0056d313208
 
