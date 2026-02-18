@@ -51,7 +51,7 @@
     },
     "engines": {
         "node": ">=24",
-        "npm": ">=11.6.2"
+        "npm": ">=11.10.0"
     },
     "types": "./out/index.d.ts"
 }

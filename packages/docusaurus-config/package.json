@@ -14,8 +14,8 @@
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "import": "./index.js",
-            "types": "./out/index.d.ts"
+            "types": "./out/index.d.ts",
+            "import": "./index.js"
         },
         "./css/*.css": "./css/*.css"
     },
@@ -56,7 +56,7 @@
     },
     "engines": {
         "node": ">=24",
-        "npm": ">=11.6.2"
+        "npm": ">=11.10.0"
     },
     "repository": {
         "type": "git",

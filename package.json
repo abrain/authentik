@@ -18,7 +18,7 @@
     },
     "engines": {
         "node": ">=24",
-        "npm": ">=11.6.2"
+        "npm": ">=11.10.0"
     },
     "workspaces": [],
     "prettier": "@goauthentik/prettier-config",
@@ -36,7 +36,7 @@
         "packageManager": {
             "name": "npm",
             "onFail": "warn",
-            "version": ">=11.6.2"
+            "version": ">=11.10.0"
         }
     }
 }

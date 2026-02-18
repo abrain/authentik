@@ -14,16 +14,16 @@
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "import": "./index.js",
-            "types": "./out/index.d.ts"
+            "types": "./out/index.d.ts",
+            "import": "./index.js"
         },
         "./imports-plugin": {
-            "import": "./lib/imports.js",
-            "types": "./out/lib/imports.d.ts"
+            "types": "./out/lib/imports.d.ts",
+            "import": "./lib/imports.js"
         },
         "./formatter": {
-            "import": "./lib/formatter.js",
-            "types": "./out/lib/formatter.d.ts"
+            "types": "./out/lib/formatter.d.ts",
+            "import": "./lib/formatter.js"
         }
     },
     "dependencies": {
@@ -48,7 +48,7 @@
     },
     "engines": {
         "node": ">=24",
-        "npm": ">=11.6.2"
+        "npm": ">=11.10.0"
     },
     "repository": {
         "type": "git",

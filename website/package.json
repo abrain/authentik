@@ -51,7 +51,7 @@
     },
     "engines": {
         "node": ">=24",
-        "npm": ">=11.6.2"
+        "npm": ">=11.10.0"
     },
     "workspaces": [
         "vendored/*",
@@ -100,7 +100,7 @@
         "packageManager": {
             "name": "npm",
             "onFail": "warn",
-            "version": ">=11.6.2"
+            "version": ">=11.10.0"
         }
     }
 }
