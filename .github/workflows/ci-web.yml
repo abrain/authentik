@@ -37,9 +37,10 @@ jobs:
           node-version-file: ${{ matrix.project }}/package.json
           cache: "npm"
           cache-dependency-path: ${{ matrix.project }}/package-lock.json
+      - name: Install NPM
+        run: npm run install-npm
       - working-directory: ${{ matrix.project }}/
-        run: |
-          npm ci
+        run: corepack npm ci
       - name: Generate API
         run: make gen-client-ts
       - name: Lint
@@ -54,13 +55,15 @@ jobs:
           node-version-file: web/package.json
           cache: "npm"
           cache-dependency-path: web/package-lock.json
+      - name: Install NPM
+        run: npm run install-npm
       - working-directory: web/
-        run: npm ci
+        run: corepack npm ci
       - name: Generate API
         run: make gen-client-ts
       - name: build
         working-directory: web/
-        run: npm run build
+        run: corepack npm run build
   ci-web-mark:
     if: always()
     needs:
@@ -82,10 +85,12 @@ jobs:
           node-version-file: web/package.json
           cache: "npm"
           cache-dependency-path: web/package-lock.json
+      - name: Install NPM
+        run: npm run install-npm
       - working-directory: web/
-        run: npm ci
+        run: corepack npm ci
       - name: Generate API
         run: make gen-client-ts
       - name: test
         working-directory: web/
-        run: npm run test || exit 0
+        run: corepack npm run test || exit 0

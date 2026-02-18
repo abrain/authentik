@@ -29,9 +29,10 @@ jobs:
           node-version-file: lifecycle/aws/package.json
           cache: "npm"
           cache-dependency-path: lifecycle/aws/package-lock.json
+      - name: Install NPM
+        run: npm run install-npm
       - working-directory: lifecycle/aws/
-        run: |
-          npm ci
+        run: corepack npm ci
       - name: Check changes have been applied
         run: |
           uv run make aws-cfn

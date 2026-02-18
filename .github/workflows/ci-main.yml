@@ -214,6 +214,8 @@ jobs:
       - name: Setup e2e env (chrome, etc)
         run: |
           docker compose -f tests/e2e/compose.yml up -d --quiet-pull
+      - name: Install NPM
+        run: npm run install-npm
       - id: cache-web
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v4
         with:
@@ -223,10 +225,10 @@ jobs:
         if: steps.cache-web.outputs.cache-hit != 'true'
         working-directory: web
         run: |
-          npm ci
+          corepack npm ci
           make -C .. gen-client-ts
-          npm run build
-          npm run build:sfe
+          corepack npm run build
+          corepack npm run build:sfe
       - name: run e2e
         run: |
           uv run coverage run manage.py test ${{ matrix.job.glob }}
@@ -257,6 +259,8 @@ jobs:
       - name: Setup conformance suite
         run: |
           docker compose -f tests/openid_conformance/compose.yml up -d --quiet-pull
+      - name: Install NPM
+        run: npm run install-npm
       - id: cache-web
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v4
         with:
@@ -266,10 +270,10 @@ jobs:
         if: steps.cache-web.outputs.cache-hit != 'true'
         working-directory: web
         run: |
-          npm ci
+          corepack npm ci
           make -C .. gen-client-ts
-          npm run build
-          npm run build:sfe
+          corepack npm run build
+          corepack npm run build:sfe
       - name: run conformance
         run: |
           uv run coverage run manage.py test ${{ matrix.job.glob }}

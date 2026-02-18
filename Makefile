@@ -103,7 +103,8 @@ migrate: ## Run the Authentik Django server's migrations
 i18n-extract: core-i18n-extract web-i18n-extract  ## Extract strings that require translation into files to send to a translation service
 
 aws-cfn:
-	cd lifecycle/aws && npm i && $(UV) run npm run aws-cfn
+	npm run install-npm
+	cd lifecycle/aws && corepack npm i && $(UV) run corepack npm run aws-cfn
 
 run-server:  ## Run the main authentik server process
 	$(UV) run ak server

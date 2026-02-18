@@ -44,12 +44,14 @@ jobs:
         with:
           files: |
             ${{ matrix.package }}/package.json
+      - name: Install NPM
+        run: npm run install-npm
       - name: Install Dependencies
-        run: npm ci
+        run: corepack npm ci
       - name: Publish package
         if: steps.changed-files.outputs.any_changed == 'true'
         working-directory: ${{ matrix.package }}
         run: |
-          npm ci
-          npm run build
-          npm publish
+          corepack npm ci
+          corepack npm run build
+          corepack npm publish

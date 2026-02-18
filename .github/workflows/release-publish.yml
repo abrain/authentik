@@ -160,10 +160,12 @@ jobs:
           node-version-file: web/package.json
           cache: "npm"
           cache-dependency-path: web/package-lock.json
+      - name: Install NPM
+        run: npm run install-npm
       - name: Install web dependencies
         working-directory: web/
         run: |
-          npm ci
+          corepack npm ci
       - name: Generate API Clients
         run: |
           make gen-client-ts
