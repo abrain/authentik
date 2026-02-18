@@ -115,11 +115,4 @@ main()
     .then(() => {
         logger.info("✅ Node.js and npm versions are in sync.");
     })
-    .catch((error) => {
-        if (error instanceof assert.AssertionError) {
-            return validateCorepackInstalled(error);
-        }
-
-        throw error;
-    })
     .catch((error) => reportAndExit(error, logger));

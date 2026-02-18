@@ -1,0 +1,5 @@
+# Git attributes configuration
+
+## Corepack
+corepack.tgz binary linguist-vendored
+.npm/*.tgz binary linguist-vendored
