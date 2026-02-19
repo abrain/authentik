@@ -32,15 +32,9 @@ jobs:
             project: web
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v5
-      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v5
+      - uses: ./.github/actions/setup-node
         with:
-          node-version-file: ${{ matrix.project }}/package.json
-          cache: "npm"
-          cache-dependency-path: ${{ matrix.project }}/package-lock.json
-      - name: Install NPM
-        run: npm run install-npm
-      - working-directory: ${{ matrix.project }}/
-        run: corepack npm ci
+          working-directory: ${{ matrix.project }}
       - name: Generate API
         run: make gen-client-ts
       - name: Lint
@@ -50,15 +44,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v5
-      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v5
+      - uses: ./.github/actions/setup-node
         with:
-          node-version-file: web/package.json
-          cache: "npm"
-          cache-dependency-path: web/package-lock.json
-      - name: Install NPM
-        run: npm run install-npm
-      - working-directory: web/
-        run: corepack npm ci
+          working-directory: web
       - name: Generate API
         run: make gen-client-ts
       - name: build
@@ -80,15 +68,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v5
-      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v5
+      - uses: ./.github/actions/setup-node
         with:
-          node-version-file: web/package.json
-          cache: "npm"
-          cache-dependency-path: web/package-lock.json
-      - name: Install NPM
-        run: npm run install-npm
-      - working-directory: web/
-        run: corepack npm ci
+          working-directory: web
       - name: Generate API
         run: make gen-client-ts
       - name: test

@@ -10,12 +10,7 @@ COPY .npm/corepack@latest.tgz ./.npm/corepack@latest.tgz
 RUN --mount=type=bind,target=/work/package.json,src=./package.json \
     --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
     npm install -g --force .npm/corepack@latest.tgz && \
-    corepack install -g --cache-only corepack.tgz
-
-RUN --mount=type=bind,target=/work/package.json,src=./package.json \
-    --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
-    --mount=type=bind,target=/work/.npm,src=./.npm \
-    --mount=type=bind,target=/work/corepack.tgz,src=./corepack.tgz \
+    corepack install -g --cache-only corepack.tgz && \
     corepack npm run install-npm
 
 WORKDIR /work/website

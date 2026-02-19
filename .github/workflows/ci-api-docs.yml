@@ -22,29 +22,19 @@ jobs:
           - prettier-check
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v5
-      - name: Install NPM
-        run: npm run install-npm
-      - name: Install Dependencies
-        working-directory: website/
-        run: corepack npm ci
+      - uses: ./.github/actions/setup-node
+        with:
+          working-directory: website
       - name: Lint
-        working-directory: website/
-        run: corepack npm run ${{ matrix.command }}
+        run: corepack npm run ${{ matrix.command }} --prefix website
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v5
-      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v5
+      - uses: ./.github/actions/setup-node
         with:
-          node-version-file: website/package.json
-          cache: "npm"
-          cache-dependency-path: website/package-lock.json
-      - name: Install NPM
-        run: npm run install-npm
-      - working-directory: website/
-        name: Install Dependencies
-        run: corepack npm ci
+          working-directory: website
       - uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v4
         with:
           path: |
@@ -75,10 +65,9 @@ jobs:
         with:
           name: api-docs
           path: website/api/build
-      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v5
+      - uses: ./.github/actions/setup-node
         with:
           node-version-file: website/package.json
-          cache: "npm"
           cache-dependency-path: website/package-lock.json
       - name: Deploy Netlify (Production)
         working-directory: website/api

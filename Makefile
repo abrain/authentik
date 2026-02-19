@@ -235,7 +235,11 @@ gen: gen-build gen-client-ts
 #########################
 
 node-install:  ## Install the necessary libraries to build Node.js packages
-	npm run install-npm
+	npm install -g .npm/corepack@latest.tgz
+	corepack install -g --cache-only corepack.tgz
+
+	node ./scripts/lint-node.mjs
+
 	corepack npm ci
 	corepack npm ci --prefix web
 
@@ -276,7 +280,14 @@ web-i18n-extract:
 docs: docs-lint-fix docs-build  ## Automatically fix formatting issues in the Authentik docs source code, lint the code, and compile it
 
 docs-install:
-	npm ci --prefix website
+	npm install -g .npm/corepack@latest.tgz
+	corepack install -g --cache-only corepack.tgz
+
+	node ./scripts/lint-node.mjs
+
+	corepack npm ci
+
+	corepack npm ci --prefix website
 
 docs-lint-fix: lint-codespell
 	corepack npm run --prefix website prettier
