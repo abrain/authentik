@@ -1,8 +1,13 @@
 {
     "name": "@goauthentik/eslint-config",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "authentik's ESLint config",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/goauthentik/authentik.git",
+        "directory": "packages/eslint-config"
+    },
     "scripts": {
         "build": "tsc -p .",
         "lint": "eslint --fix .",
@@ -11,6 +16,7 @@
         "prettier-check": "prettier --cache --check -u ."
     },
     "type": "module",
+    "types": "./out/index.d.ts",
     "exports": {
         "./package.json": "./package.json",
         ".": {
@@ -52,21 +58,15 @@
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.49.0"
     },
-    "engines": {
-        "node": ">=24",
-        "npm": ">=11.10.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/goauthentik/authentik.git",
-        "directory": "packages/eslint-config"
-    },
-    "types": "./out/index.d.ts",
     "files": [
         "./index.js",
         "lib/**/*",
         "out/**/*"
     ],
+    "engines": {
+        "node": ">=24",
+        "npm": ">=11.10.0"
+    },
     "prettier": "@goauthentik/prettier-config",
     "peerDependenciesMeta": {
         "react": {
