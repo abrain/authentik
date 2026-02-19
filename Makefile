@@ -235,7 +235,7 @@ gen: gen-build gen-client-ts
 #########################
 
 node-install:  ## Install the necessary libraries to build Node.js packages
-	npm install -g .corepack/releases/latest.tgz
+	npm install -g corepack/releases/latest.tgz
 	corepack install -g --cache-only corepack.tgz
 
 	node ./scripts/node/lint-runtime.mjs

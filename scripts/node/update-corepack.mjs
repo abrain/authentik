@@ -14,7 +14,7 @@ import { createLogger, findNearestLockfile, parseCWD } from "./utils.mjs";
 const logger = createLogger("update-corepack");
 
 const REGISTRY_URL = "https://registry.npmjs.org/corepack";
-const OUTPUT_DIR = join(".corepack", "releases");
+const OUTPUT_DIR = join("corepack", "releases");
 const OUTPUT_FILENAME = "latest.tgz";
 
 async function main() {
