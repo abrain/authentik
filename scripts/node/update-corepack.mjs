@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @file Downloads the latest corepack tarball from the npm registry and stores
- * it at .corepack/latest.tgz in the repo root.
+ * @file Downloads the latest corepack tarball from the npm registry.
  */
 
 import * as crypto from "node:crypto";
@@ -15,7 +14,7 @@ import { createLogger, findNearestLockfile, parseCWD } from "./utils.mjs";
 const logger = createLogger("update-corepack");
 
 const REGISTRY_URL = "https://registry.npmjs.org/corepack";
-const OUTPUT_DIR = ".corepack";
+const OUTPUT_DIR = join(".corepack", "releases");
 const OUTPUT_FILENAME = "latest.tgz";
 
 async function main() {

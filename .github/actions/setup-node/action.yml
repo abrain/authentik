@@ -38,7 +38,7 @@ runs:
 
     - name: Install Corepack
       shell: bash
-      run: npm install -g .npm/corepack@latest.tgz
+      run: npm install -g .corepack/releases/latest.tgz
     - name: Install NPM via Corepack
       shell: bash
       run: corepack install -g --cache-only corepack.tgz

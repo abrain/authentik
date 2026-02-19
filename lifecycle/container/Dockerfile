@@ -9,21 +9,20 @@ ENV NODE_ENV=production
 
 WORKDIR /work
 
-COPY corepack.tgz .
-COPY .npm/corepack@latest.tgz ./.npm/corepack@latest.tgz
-
-RUN --mount=type=bind,target=/work/package.json,src=./package.json \
+RUN --mount=type=bind,target=/work/corepack.tgz,src=./corepack.tgz \
+    --mount=type=bind,target=/work/.corepack/,src=./.corepack/ \
+    --mount=type=bind,target=/work/package.json,src=./package.json \
     --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
     --mount=type=bind,target=/work/web/package.json,src=./web/package.json \
     --mount=type=bind,target=/work/web/package-lock.json,src=./web/package-lock.json \
     --mount=type=bind,target=/work/scripts/node/,src=./scripts/node/ \
-    npm install -g --force .npm/corepack@latest.tgz && \
+    npm install -g --force .corepack/releases/latest.tgz && \
     corepack install -g --cache-only corepack.tgz && \
     node scripts/node/lint-runtime.mjs ./web
 
 RUN --mount=type=bind,target=/work/package.json,src=./package.json \
     --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
-    npm install -g --force .npm/corepack@latest.tgz && \
+    npm install -g --force .corepack/releases/latest.tgz && \
     corepack install -g --cache-only corepack.tgz
 
 WORKDIR /work/web

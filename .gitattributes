@@ -2,4 +2,4 @@
 
 ## Corepack
 corepack.tgz binary linguist-vendored
-.npm/*.tgz binary linguist-vendored
+.corepack/*.tgz binary linguist-vendored
