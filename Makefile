@@ -102,9 +102,9 @@ migrate: ## Run the Authentik Django server's migrations
 
 i18n-extract: core-i18n-extract web-i18n-extract  ## Extract strings that require translation into files to send to a translation service
 
-aws-cfn:
-	npm run install-npm
-	cd lifecycle/aws && corepack npm i && $(UV) run corepack npm run aws-cfn
+aws-cfn: node-install
+	corepack npm i --prefix lifecycle/aws
+	$(UV) run corepack npm run aws-cfn --prefix lifecycle/aws
 
 run-server:  ## Run the main authentik server process
 	$(UV) run ak server
@@ -123,7 +123,7 @@ core-i18n-extract:
 		--ignore website \
 		-l en
 
-install: node-install docs-install core-install  ## Install all requires dependencies for `node`, `docs` and `core`
+install: node-install web-install core-install  ## Install all requires dependencies for `node`, `web` and `core`
 
 dev-drop-db:
 	$(eval pg_user := $(shell $(UV) run python -m authentik.lib.config postgresql.user 2>/dev/null))
@@ -240,14 +240,16 @@ node-install:  ## Install the necessary libraries to build Node.js packages
 
 	node ./scripts/node/lint-runtime.mjs
 
-	corepack npm ci
-	corepack npm ci --prefix web
 
 #########################
 ## Web
 #########################
 
-web-build: node-install  ## Build the Authentik UI
+web-install: ## Install the necessary libraries to build the Authentik UI
+	corepack npm ci
+	corepack npm ci --prefix web
+
+web-build:  ## Build the Authentik UI
 	corepack npm run --prefix web build
 
 web: web-lint-fix web-lint web-check-compile  ## Automatically fix formatting issues in the Authentik UI source code, lint the code, and compile it
@@ -279,10 +281,7 @@ web-i18n-extract:
 
 docs: docs-lint-fix docs-build  ## Automatically fix formatting issues in the Authentik docs source code, lint the code, and compile it
 
-docs-install:
-	npm install -g .npm/corepack@latest.tgz
-	corepack install -g --cache-only corepack.tgz
-
+docs-install: node-install  ## Install the necessary libraries to build the Authentik documentation
 	node ./scripts/node/lint-runtime.mjs
 
 	corepack npm ci
