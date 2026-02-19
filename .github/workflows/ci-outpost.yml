@@ -162,11 +162,11 @@ jobs:
         run: make gen-client-go
       - name: Build web
         working-directory: web/
-        run: |
+        run: | # shell
           corepack npm ci
           corepack npm run build-proxy
       - name: Build outpost
-        run: |
+        run: | # shell
           set -x
           export GOOS=${{ matrix.goos }}
           export GOARCH=${{ matrix.goarch }}

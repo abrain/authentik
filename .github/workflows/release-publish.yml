@@ -175,7 +175,7 @@ jobs:
         run: |
           npm run build-proxy
       - name: Build outpost
-        run: |
+        run: | # shell
           set -x
           export GOOS=${{ matrix.goos }}
           export GOARCH=${{ matrix.goarch }}
@@ -218,7 +218,7 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v5
       - name: Run test suite in final docker images
-        run: |
+        run: | # shell
           echo "PG_PASS=$(openssl rand 32 | base64 -w 0)" >> lifecycle/container/.env
           echo "AUTHENTIK_SECRET_KEY=$(openssl rand 32 | base64 -w 0)" >> lifecycle/container/.env
           docker compose -f lifecycle/container/compose.yml pull -q
@@ -241,7 +241,7 @@ jobs:
         with:
           image-name: ghcr.io/goauthentik/server
       - name: Get static files from docker image
-        run: |
+        run: | # shell
           docker pull ${{ steps.ev.outputs.imageMainName }}
           container=$(docker container create ${{ steps.ev.outputs.imageMainName }})
           docker cp ${container}:web/ .

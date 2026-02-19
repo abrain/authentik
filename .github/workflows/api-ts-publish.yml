@@ -33,18 +33,18 @@ jobs:
         run: make gen-client-ts
       - name: Publish package
         working-directory: gen-ts-api/
-        run: |
+        run: | # shell
           npm i
           npm publish --tag generated
       - name: Upgrade /web
         working-directory: web
-        run: |
-          export VERSION=`node -e 'console.log(require("../gen-ts-api/package.json").version)'`
+        run: | # shell
+          export VERSION=`node -e 'import mod from "./gen-ts-api/package.json" with { type: "json" };console.log(mod.version);'`
           npm i @goauthentik/api@$VERSION
       - name: Upgrade /web/packages/sfe
         working-directory: web/packages/sfe
-        run: |
-          export VERSION=`node -e 'console.log(require("../gen-ts-api/package.json").version)'`
+        run: | # shell
+          export VERSION=`node -e 'import mod from "./gen-ts-api/package.json" with { type: "json" };console.log(mod.version);'`
           npm i @goauthentik/api@$VERSION
       - uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v7
         id: cpr

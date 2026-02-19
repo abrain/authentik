@@ -51,7 +51,7 @@ jobs:
       - name: Publish package
         if: steps.changed-files.outputs.any_changed == 'true'
         working-directory: ${{ matrix.package }}
-        run: |
+        run: | # shell
           corepack npm ci
           corepack npm run build
           corepack npm publish
