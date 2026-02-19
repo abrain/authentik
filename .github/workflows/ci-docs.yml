@@ -28,8 +28,7 @@ jobs:
         with:
           working-directory: website
       - name: Lint
-        working-directory: website/
-        run: corepack npm run ${{ matrix.command }}
+        run: corepack npm run ${{ matrix.command }} --prefix website
   build-docs:
     runs-on: ubuntu-latest
     env:
@@ -37,11 +36,11 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v5
       - uses: ./.github/actions/setup-node
+        name: Setup Node.js
         with:
           working-directory: website
       - name: Build Documentation via Docusaurus
-        working-directory: website/
-        run: corepack npm run build
+        run: corepack npm run build --prefix website
   build-integrations:
     runs-on: ubuntu-latest
     env:
@@ -52,8 +51,7 @@ jobs:
         with:
           working-directory: website
       - name: Build Integrations via Docusaurus
-        working-directory: website/
-        run: npm run build -w integrations
+        run: corepack npm run build -w integrations --prefix website
   build-container:
     runs-on: ubuntu-latest
     permissions:

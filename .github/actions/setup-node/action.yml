@@ -28,12 +28,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup Node.js
+    - name: Setup Node.js (Monorepo Root)
       uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v4
       with:
-        node-version-file: ${{ inputs.working-directory }}/${{ inputs.node-version-file }}
+        node-version-file: ${{ inputs.node-version-file }}
         cache: ${{ inputs.cache }}
-        cache-dependency-path: ${{ inputs.working-directory }}/${{ inputs.cache-dependency-path }}
+        cache-dependency-path: ${{ inputs.cache-dependency-path }}
         registry-url: ${{ inputs.registry-url }}
 
     - name: Install Corepack
@@ -49,6 +49,15 @@ runs:
       if: ${{ contains(inputs.dependencies, 'monorepo') }}
       shell: bash
       run: corepack npm ci
+    - name: Setup Node.js (Working Directory)
+      if: ${{ contains(inputs.dependencies, 'working-directory') }}
+      uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v4
+      with:
+        node-version-file: ${{ inputs.working-directory }}/${{ inputs.node-version-file }}
+        cache: ${{ inputs.cache }}
+        cache-dependency-path: ${{ inputs.working-directory }}/${{ inputs.cache-dependency-path }}
+        registry-url: ${{ inputs.registry-url }}
+
     - name: Install working directory dependencies
       if: ${{ contains(inputs.dependencies, 'working-directory') }}
       shell: bash

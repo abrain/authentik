@@ -3,7 +3,6 @@
     "version": "2026.5.0-rc1",
     "private": true,
     "scripts": {
-        "preinstall": "npm run lint:node",
         "lint": "run-s lint:spellcheck lint:lockfile",
         "lint:lockfile": "./scripts/node/lint-lockfile.mjs",
         "lint:node": "./scripts/node/lint-runtime.mjs",
