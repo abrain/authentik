@@ -23,7 +23,7 @@ import {
     parseCWD,
     parseRange,
     reportAndExit,
-} from "./node/utils.mjs";
+} from "./utils.mjs";
 
 const logger = createLogger("validate");
 

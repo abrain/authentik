@@ -28,7 +28,7 @@ import {
     loadJSON,
     parseCWD,
     reportAndExit,
-} from "./node/utils.mjs";
+} from "./utils.mjs";
 
 //#region Utilities
 

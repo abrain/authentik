@@ -238,7 +238,7 @@ node-install:  ## Install the necessary libraries to build Node.js packages
 	npm install -g .npm/corepack@latest.tgz
 	corepack install -g --cache-only corepack.tgz
 
-	node ./scripts/lint-node.mjs
+	node ./scripts/node/lint-runtime.mjs
 
 	corepack npm ci
 	corepack npm ci --prefix web
@@ -283,7 +283,7 @@ docs-install:
 	npm install -g .npm/corepack@latest.tgz
 	corepack install -g --cache-only corepack.tgz
 
-	node ./scripts/lint-node.mjs
+	node ./scripts/node/lint-runtime.mjs
 
 	corepack npm ci
 

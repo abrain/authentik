@@ -44,7 +44,7 @@ runs:
       run: corepack install -g --cache-only corepack.tgz
     - name: Verify Node.js and NPM versions
       shell: bash
-      run: node ./scripts/lint-node.mjs
+      run: node ./scripts/node/lint-runtime.mjs
     - name: Install monorepo dependencies
       if: ${{ contains(inputs.dependencies, 'monorepo') }}
       shell: bash

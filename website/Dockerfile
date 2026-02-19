@@ -9,9 +9,12 @@ COPY .npm/corepack@latest.tgz ./.npm/corepack@latest.tgz
 
 RUN --mount=type=bind,target=/work/package.json,src=./package.json \
     --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
+    --mount=type=bind,target=/work/website/package.json,src=./website/package.json \
+    --mount=type=bind,target=/work/website/package-lock.json,src=./website/package-lock.json \
+    --mount=type=bind,target=/work/scripts/node/,src=./scripts/node/ \
     npm install -g --force .npm/corepack@latest.tgz && \
     corepack install -g --cache-only corepack.tgz && \
-    corepack npm run install-npm
+    node scripts/node/lint-runtime.mjs ./website
 
 WORKDIR /work/website
 
@@ -24,6 +27,7 @@ RUN --mount=type=bind,target=/work/website/package.json,src=./website/package.js
     --mount=type=bind,target=/work/website/docs/package.json,src=./website/docs/package.json \
     --mount=type=cache,id=npm-website,sharing=shared,target=/root/.npm \
     corepack npm ci --workspaces --include-workspace-root
+
 
 COPY ./website /work/website/
 COPY ./blueprints /work/blueprints/

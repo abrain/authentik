@@ -10,7 +10,7 @@ import * as fs from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
 import { parseArgs } from "node:util";
 
-import { createLogger, findNearestLockfile, parseCWD } from "./node/utils.mjs";
+import { createLogger, findNearestLockfile, parseCWD } from "./utils.mjs";
 
 const logger = createLogger("update-corepack");
 

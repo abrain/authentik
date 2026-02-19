@@ -5,11 +5,11 @@
     "scripts": {
         "preinstall": "npm run lint:node",
         "lint": "run-s lint:spellcheck lint:lockfile",
-        "lint:lockfile": "./scripts/lint-lockfile.mjs",
-        "lint:node": "./scripts/lint-node.mjs",
+        "lint:lockfile": "./scripts/node/lint-lockfile.mjs",
+        "lint:node": "./scripts/node/lint-runtime.mjs",
         "lint:spellcheck": "echo 'Skipping spellcheck linting'",
         "pack": "corepack pack",
-        "update-corepack": "./scripts/update-corepack.mjs"
+        "update-corepack": "./scripts/node/update-corepack.mjs"
     },
     "type": "module",
     "dependencies": {

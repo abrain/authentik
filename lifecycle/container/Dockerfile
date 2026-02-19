@@ -14,14 +14,17 @@ COPY .npm/corepack@latest.tgz ./.npm/corepack@latest.tgz
 
 RUN --mount=type=bind,target=/work/package.json,src=./package.json \
     --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
+    --mount=type=bind,target=/work/web/package.json,src=./web/package.json \
+    --mount=type=bind,target=/work/web/package-lock.json,src=./web/package-lock.json \
+    --mount=type=bind,target=/work/scripts/node/,src=./scripts/node/ \
     npm install -g --force .npm/corepack@latest.tgz && \
-    corepack install -g --cache-only corepack.tgz
+    corepack install -g --cache-only corepack.tgz && \
+    node scripts/node/lint-runtime.mjs ./web
 
 RUN --mount=type=bind,target=/work/package.json,src=./package.json \
     --mount=type=bind,target=/work/package-lock.json,src=./package-lock.json \
-    --mount=type=bind,target=/work/.npm,src=./.npm \
-    --mount=type=bind,target=/work/corepack.tgz,src=./corepack.tgz \
-    corepack npm run install-npm
+    npm install -g --force .npm/corepack@latest.tgz && \
+    corepack install -g --cache-only corepack.tgz
 
 WORKDIR /work/web
 
